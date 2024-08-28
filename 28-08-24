@@ -20,5 +20,22 @@ we will do -
 
 →gui
 
-
 →connect express sever with mongo db
+
+
+Mongosh: shell to connect CLI version
+
+step1:create a server of mongodb
+
+D1 Database od chitkara has multiple collections: users, faca, students
+
+collections are in documents[key value pairs]
+
+
+##Commands:
+1.mongosh:for checking version and installation.
+2.show dbs:for check databases
+3.use database_name:for creating database
+4.db.createCollection("Collection_name"):for craeting collections.
+5.db.collection.insertOne():for inserting single document inside collection.
+6.db.collection.insertMany():for inserting many documents at same time in a collection.
