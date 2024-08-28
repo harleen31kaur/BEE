@@ -1,0 +1,24 @@
+## **Mongodb**
+
+MongoDB is a popular open-source NoSQL database management system that uses a document-oriented model. It stores data in flexible, JSON-like documents called BSON (Binary JSON), allowing for dynamic schemas and efficient querying.
+
+BSON is much faster than json
+
+ (**binary encoded Javascript Object Notation)**
+
+front end client ———→ backend ——————>mongodb
+
+                                                                             →CLI(command line interfsace)
+
+                                                                             →atlas(cloud based mongodb server)
+
+                                                                             →compsss(local server )
+
+we will do -
+
+→cli(local)
+
+→gui
+
+
+→connect express sever with mongo db
