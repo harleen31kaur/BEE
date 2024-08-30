@@ -1,3 +1,33 @@
+**db.User.countDocuments({name:”leen”}):**  Count no. of documents with specific name.
+
+**db.User.estimatedDocumentCount():**  It will give you total number of documents inside a collection
+
+**Query Parameters:** 
+
+**db.User.updateMany({},{$set:{subject:"data-science"}}):**  If already exist it updates If doesn’t exist it creates.
+
+**db.User.updateMany({marks:{$gte:90,$lte:100}},{$set: {Grade:"C"}}):** Here we use query operators like $gte and $lte for filter.
+
+**Some Other Examples:**
+
+1.db.User.find({age:{$eq:25},marks:{$eq:88}})
+
+2.db.User.find({age:{$gte:22},marks:{$gte:90}})
+
+3.db.User.find({Grade:{$eq:"A"}})
+
+Example of AND: db.User.find({$and:[{age:25},{marks:88}]})
+
+OR: db.User.find({$or:[{age:25},{marks:22}]})
+
+NOT: db.User.find({age:{$not:{$eq:22}}})
+
+NOR: db.User.find({$nor:[{age:25},{marks:22}]})
+
+
+---------
+
+
 test> show dbs
 admin   40.00 KiB
 config  72.00 KiB
@@ -349,4 +379,200 @@ user> db.collection.find({ $nor: [{ age: 22 }, { marks: 85 }] });
     Grade: 'F'
   }
 ]
-user> 
+
+
+
+user> db.collection.find({ Grade: { $exists: true } });
+[
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f36'),
+    name: 'Alice',
+    age: 25,
+    marks: 88,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'C'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f37'),
+    name: 'Bob',
+    age: 22,
+    marks: 91,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'B'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f38'),
+    name: 'Charlie',
+    age: 27,
+    marks: 85,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'C'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f39'),
+    name: 'Diana',
+    age: 24,
+    marks: 92,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'B'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f3a'),
+    name: 'Edward',
+    age: 26,
+    marks: 79,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'F'
+  },
+  {
+    _id: ObjectId('66cfff8997f69d73e50a7f3c'),
+    name: 'Edward',
+    age: 99,
+    marks: 79,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'F'
+  }
+]
+
+user>  db.collection.find({ age: { $type: "int" } });
+[
+  {
+    _id: ObjectId('66cff35997f69d73e50a7f35'),
+    name: 'harleen',
+    age: 20,
+    subject: 'data science',
+    address: 'Chitkara University'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f36'),
+    name: 'Alice',
+    age: 25,
+    marks: 88,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'C'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f37'),
+    name: 'Bob',
+    age: 22,
+    marks: 91,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'B'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f38'),
+    name: 'Charlie',
+    age: 27,
+    marks: 85,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'C'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f39'),
+    name: 'Diana',
+    age: 24,
+    marks: 92,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'B'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f3a'),
+    name: 'Edward',
+    age: 26,
+    marks: 79,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'F'
+  },
+  {
+    _id: ObjectId('66cfff8997f69d73e50a7f3c'),
+    name: 'Edward',
+    age: 99,
+    marks: 79,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'F'
+  }
+]
+
+
+user>  db.collection.find({ address: { $type: 'string' } });
+[
+  {
+    _id: ObjectId('66cff35997f69d73e50a7f35'),
+    name: 'harleen',
+    age: 20,
+    subject: 'data science',
+    address: 'Chitkara University'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f36'),
+    name: 'Alice',
+    age: 25,
+    marks: 88,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'C'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f37'),
+    name: 'Bob',
+    age: 22,
+    marks: 91,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'B'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f38'),
+    name: 'Charlie',
+    age: 27,
+    marks: 85,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'C'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f39'),
+    name: 'Diana',
+    age: 24,
+    marks: 92,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'B'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f3a'),
+    name: 'Edward',
+    age: 26,
+    marks: 79,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'F'
+  },
+  {
+    _id: ObjectId('66cff83a97f69d73e50a7f3b'),
+    date: ISODate('2024-08-29T04:25:30.953Z'),
+    subject: 'data science',
+    address: 'Chitkara University'
+  },
+  {
+    _id: ObjectId('66cfff8997f69d73e50a7f3c'),
+    name: 'Edward',
+    age: 99,
+    marks: 79,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'F'
+  }
+]
