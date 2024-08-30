@@ -1,0 +1,352 @@
+test> show dbs
+admin   40.00 KiB
+config  72.00 KiB
+local   40.00 KiB
+newdb    8.00 KiB
+user    80.00 KiB
+test> use user
+switched to db user
+user> db.collection.countDocuments({name:"Charlie"})
+1
+user> db.collection.countDocuments({name:"Edward"})
+2
+user> db.collection.estimatedDocumentCount()
+8
+user> db.collection.updateMany({},{$set:{subject:"data science"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 8,
+  modifiedCount: 8,
+  upsertedCount: 0
+}
+user> db.collection.updateMany({},{$set:{address:"Chitkara University"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 8,
+  modifiedCount: 8,
+  upsertedCount: 0
+}
+user> db.collection.updateMany({}, {$set: {grades: []}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 8,
+  modifiedCount: 8,
+  upsertedCount: 0
+}
+user> db.collection.updateOne({ _id: ObjectId("66cff63997f69d73e50a7f39") }, {$push: { grades: { $each: ["A", "B","C"] } }});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+user> db.collection.updateMany({}, {$unset: { grades: "" }});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 8,
+  modifiedCount: 8,
+  upsertedCount: 0
+}
+user> db.collection.updateMany({marks:{$gte:95}},{$set:{Grade:A}})
+ReferenceError: A is not defined
+user> db.collection.updateMany({marks:{$gte:95}},{$set:{Grade":A"}})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:55)
+
+> 1 | db.collection.updateMany({marks:{$gte:95}},{$set:{Grade":A"}})
+    |                                                        ^
+  2 |
+
+user> db.collection.updateMany({marks:{$gte:95}},{$set:{Grade:"A"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+user> db.collection.updateMany({marks:{$gte:90,$lte:94}},{$set:{Grade:"B"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+user> db.collection.updateMany({marks:{$gte:80,$lte:89}},{$set:{Grade:"C"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+user> db.collection.updateMany({marks:{$gte:70,$lte:79}},{$set:{Grade:"F"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+user> db.collection.find({ age: 25, marks: 88 });
+[
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f36'),
+    name: 'Alice',
+    age: 25,
+    marks: 88,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'C'
+  }
+]
+user> db.collection.find({ age: { $eq: 25 }, marks: { $eq: 88 } });
+[
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f36'),
+    name: 'Alice',
+    age: 25,
+    marks: 88,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'C'
+  }
+]
+user> db.collection.find({ marks: { $gte: 70 },age: { $gte:258 } });
+
+user> db.collection.find({ marks: { $gte: 79 },age: { $gte:25 } });
+[
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f36'),
+    name: 'Alice',
+    age: 25,
+    marks: 88,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'C'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f38'),
+    name: 'Charlie',
+    age: 27,
+    marks: 85,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'C'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f3a'),
+    name: 'Edward',
+    age: 26,
+    marks: 79,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'F'
+  },
+  {
+    _id: ObjectId('66cfff8997f69d73e50a7f3c'),
+    name: 'Edward',
+    age: 99,
+    marks: 79,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'F'
+  }
+]
+user> db.collection.find({grade: { $eq: "B" } });
+
+user> db.collection.find({Grade: { $eq: "B" } });
+[
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f37'),
+    name: 'Bob',
+    age: 22,
+    marks: 91,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'B'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f39'),
+    name: 'Diana',
+    age: 24,
+    marks: 92,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'B'
+  }
+]
+user> db.students.find({ $and: [{ age:22 }, { marks:91} }] 
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:50)
+
+> 1 | db.students.find({ $and: [{ age:22 }, { marks:91} }] 
+    |                                                   ^
+  2 |
+
+user> db.collection.find({ $and: [{ age:22 }, { marks:91} }] 
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:52)
+
+> 1 | db.collection.find({ $and: [{ age:22 }, { marks:91} }] 
+    |                                                     ^
+  2 |
+
+user> db.collection.find({ $and: [{ age:22 }, { marks:91}]} )
+[
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f37'),
+    name: 'Bob',
+    age: 22,
+    marks: 91,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'B'
+  }
+]
+user> db.collection.find({ $or: [{ age: 22 }, { marks: 85 }] });
+[
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f37'),
+    name: 'Bob',
+    age: 22,
+    marks: 91,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'B'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f38'),
+    name: 'Charlie',
+    age: 27,
+    marks: 85,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'C'
+  }
+]
+user> db.students.find({ age: { $not: 25  } });
+MongoServerError[BadValue]: $not needs a regex or a document
+user> db.students.find({ age: { $not:{$eq: 25}  } });
+
+user> db.collection.find({ age: { $not:{$eq: 25}  } });
+[
+  {
+    _id: ObjectId('66cff35997f69d73e50a7f35'),
+    name: 'harleen',
+    age: 20,
+    subject: 'data science',
+    address: 'Chitkara University'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f37'),
+    name: 'Bob',
+    age: 22,
+    marks: 91,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'B'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f38'),
+    name: 'Charlie',
+    age: 27,
+    marks: 85,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'C'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f39'),
+    name: 'Diana',
+    age: 24,
+    marks: 92,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'B'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f3a'),
+    name: 'Edward',
+    age: 26,
+    marks: 79,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'F'
+  },
+  {
+    _id: ObjectId('66cff83a97f69d73e50a7f3b'),
+    date: ISODate('2024-08-29T04:25:30.953Z'),
+    subject: 'data science',
+    address: 'Chitkara University'
+  },
+  {
+    _id: ObjectId('66cfff8997f69d73e50a7f3c'),
+    name: 'Edward',
+    age: 99,
+    marks: 79,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'F'
+  }
+]
+user> db.collection.find({ $nor: [{ age: 22 }, { marks: 85 }] });
+[
+  {
+    _id: ObjectId('66cff35997f69d73e50a7f35'),
+    name: 'harleen',
+    age: 20,
+    subject: 'data science',
+    address: 'Chitkara University'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f36'),
+    name: 'Alice',
+    age: 25,
+    marks: 88,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'C'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f39'),
+    name: 'Diana',
+    age: 24,
+    marks: 92,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'B'
+  },
+  {
+    _id: ObjectId('66cff63997f69d73e50a7f3a'),
+    name: 'Edward',
+    age: 26,
+    marks: 79,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'F'
+  },
+  {
+    _id: ObjectId('66cff83a97f69d73e50a7f3b'),
+    date: ISODate('2024-08-29T04:25:30.953Z'),
+    subject: 'data science',
+    address: 'Chitkara University'
+  },
+  {
+    _id: ObjectId('66cfff8997f69d73e50a7f3c'),
+    name: 'Edward',
+    age: 99,
+    marks: 79,
+    subject: 'data science',
+    address: 'Chitkara University',
+    Grade: 'F'
+  }
+]
+user> 
